@@ -1,7 +1,7 @@
 #include <iostream>
 using namespace std;
 
-const int MAX_BOOKS = 100;
+const int MAX_BOOKS = 500;
 
 class Book {
 public:
@@ -125,4 +125,5 @@ int main() {
 
 	l2.deleteBook(1);
 	l2.printCollection();
+
 }
