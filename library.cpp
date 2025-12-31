@@ -1,7 +1,7 @@
 #include <iostream>
 using namespace std;
 
-const int MAX_BOOKS = 500;
+const int MAX_BOOKS = 100;
 
 class Book {
 public:
@@ -11,6 +11,14 @@ public:
 		}
 		else {
 			title = "A Book";
+		}
+	}
+	void setAuthor(string a) {
+		if (a.length() != 0) {
+			author = a;
+		}
+		else {
+			author = "Unknown";
 		}
 	}
 	void setYear(int y) {
@@ -25,32 +33,38 @@ public:
 	string getTitle() {
 		return title;
 	}
+	string getAuthor() { 
+		return author; 
+	}
 	int getYear() {
 		return yearPublished;
 	}
 
 	Book() {
-		title = "book";
+		title = "A Book";
+		author = "Unknown";
 		yearPublished = 2025;
 	}
-	Book(string t, int y) {
-		title = t;
-		yearPublished = y;
+	Book(string t, string a, int y) {
+		setTitle(t);
+		setAuthor(a);
+		setYear(y);
 	}
 
 private:
 	string title;
+	string author;
 	int yearPublished;
 };
 
 class Library {
 public:
-	void addBook(string title, int yr) {
+	void addBook(string title, string author, int yr) {
 		if (numBook >= MAX_BOOKS) {
 			cout << "out of space!";
 		}
 		else {
-			collection[numBook] = new Book(title, yr);
+			collection[numBook] = new Book(title, author, yr);
 			numBook++;
 		}
 	}
@@ -69,8 +83,12 @@ public:
 
 	void printCollection() {
 		for (int i = 0; i < numBook; i++) {
-			cout << collection[i]->getTitle() << ", " << collection[i]->getYear() << endl;
+			cout << collection[i]->getTitle() << " | By, " << collection[i]->getAuthor() << " | Published in " << collection[i]->getYear() << endl;
 		}
+	}
+	void printLibraryInfo() {
+		cout << "Library name: " << name << endl;
+		cout << "Number of books: " << numBook << endl;
 	}
 
 	string getBookTitle(int n){
@@ -87,7 +105,7 @@ public:
 	}
 
 	Library() {
-		name = "Stories";
+		name = "Town Library";
 		for (int i = 0; i < MAX_BOOKS; i++) {
 			collection[i] = nullptr;
 		}
@@ -113,17 +131,25 @@ private:
 };
 
 int main() {
+	//how to use library class
+
 	Library l;
-	l.addBook("how to make coffee", 2000);
+	l.addBook("How to Make Coffee", "Ariel B.", 2000);
+	l.printLibraryInfo();
 	l.printCollection();
 
+	cout << "=====" << endl;
+
 	Library l2("Small Book Library");
-	l2.addBook("sam i am", 2002);
-	l2.addBook("i am sam", 2003);
-	l2.addBook("am i sam?", 2004);
+	l2.addBook("Sam I Am", "Sam I. Am", 2002);
+	l2.addBook("I Am Sam", "Sam I. Am", 2003);
+	l2.addBook("Am I Sam?", "Sam I. Am", 2004);
+	l2.printLibraryInfo();
 	l2.printCollection();
 
-	l2.deleteBook(1);
-	l2.printCollection();
+	cout << "=====" << endl;
 
+	l2.deleteBook(1); //removes index 1 book of l2 library (removes I Am Sam book)
+	l2.printLibraryInfo();
+	l2.printCollection();
 }
